@@ -36,6 +36,7 @@
     if(!valid.length){setInfo('Scegli immagini JPEG, PNG, WebP, GIF o BMP.');return;}
     valid.forEach(file=>{const item={id:nextId++,file,url:URL.createObjectURL(file),normalized:null,ratio:allRatio};items.push(item);makeThumbnail(item);});
     updateGallery();drop.classList.add('hidden');editor.classList.remove('hidden');
+    ratioAllButtons.closest('.field').classList.toggle('hidden',items.length<2);
     if(!activeId)selectItem(items[0].id);else setInfo(items.length+' immagini caricate.');
   }
   function makeThumbnail(item){
@@ -60,6 +61,7 @@
     cropBox.style.left='0px';cropBox.style.top='0px';cropBox.style.width='0px';cropBox.style.height='0px';
     strip.replaceChildren();
     editor.classList.add('hidden');drop.classList.remove('hidden');
+    ratioAllButtons.closest('.field').classList.add('hidden');
     ratioSelect.value=allRatio;updateRatioButtons();updateAllRatioButtons();
     customRatio.classList.toggle('hidden',allRatio!=='custom');
     updateGallery();setInfo('Seleziona le immagini da ritagliare.');
