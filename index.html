@@ -13,7 +13,8 @@
   <section class="tool">
     <div class="drop" id="drop">
       <p id="droptext">Trascina qui una o più immagini oppure</p>
-      <div class="actions centered"><button class="btn alt" id="chooseFile" type="button">Scegli immagini</button></div>
+      <div class="actions centered"><button class="btn" id="chooseFolder" type="button">Apri cartella foto</button><button class="btn alt" id="chooseFile" type="button">Scegli immagini</button></div>
+      <input id="folderPicker" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp" webkitdirectory multiple hidden>
       <input id="picker" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp" multiple hidden>
     </div>
   </section>
@@ -75,7 +76,7 @@
       <button class="btn" id="downloadAll" type="button">Ritaglia e scarica tutte</button>
       <button class="btn alt" id="reset" type="button">Reimposta</button>
       <button class="btn alt" id="chooseAnother" type="button">Aggiungi immagini</button>
-      <button class="btn alt" id="clearAll" type="button">Rimuovi tutte le foto</button>
+      <button class="btn alt" id="clearAll" type="button">Azzera</button>
     </div>
     <div class="gallery-wrap"><div class="gallery-heading"><span id="galleryCount">Immagini</span><span class="gallery-hint">Seleziona una miniatura per modificarla</span></div><div class="thumbnail-strip" id="thumbnailStrip" aria-label="Seleziona immagine"></div></div>
   </section>
