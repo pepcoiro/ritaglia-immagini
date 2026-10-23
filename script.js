@@ -64,8 +64,12 @@
       $('droptext').textContent='Trascina qui più immagini oppure';
       setInfo('Seleziona le immagini da ritagliare.');
     }else{
-      if(wasActive){activeId=null;selectItem(next.id)}
-      else if(activeId===null)selectItem(items[0].id);
+      if(wasActive){
+        activeId=null;image.onload=null;image.onerror=null;image.removeAttribute('src');
+        imageUrl=null;naturalW=0;naturalH=0;crop={x:0,y:0,w:0,h:0};bounds={x:0,y:0,w:0,h:0};drag=null;
+        cropBox.style.left='0px';cropBox.style.top='0px';cropBox.style.width='0px';cropBox.style.height='0px';
+        selectItem(next.id);
+      }else if(activeId===null)selectItem(items[0].id);
       ratioAllButtons.closest('.field').classList.toggle('hidden',items.length<2);
     }
     updateGallery();
