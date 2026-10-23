@@ -12,9 +12,9 @@
   <header><a href="#">Ritaglia immagini</a></header>
   <section class="tool">
     <div class="drop" id="drop">
-      <p id="droptext">Trascina qui un'immagine oppure</p>
-      <div class="actions centered"><button class="btn alt" id="chooseFile" type="button">Scegli immagine</button></div>
-      <input id="picker" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp" hidden>
+      <p id="droptext">Trascina qui più immagini oppure</p>
+      <div class="actions centered"><button class="btn alt" id="chooseFile" type="button">Scegli immagini</button></div>
+      <input id="picker" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp" multiple hidden>
     </div>
   </section>
 
@@ -58,12 +58,14 @@
 
     <div class="actions">
       <button class="btn" id="download" type="button">Ritaglia e scarica</button>
+      <button class="btn" id="downloadAll" type="button">Ritaglia tutte</button>
       <button class="btn alt" id="reset" type="button">Reimposta</button>
-      <button class="btn alt" id="chooseAnother" type="button">Cambia immagine</button>
+      <button class="btn alt" id="chooseAnother" type="button">Aggiungi immagini</button>
     </div>
+    <div class="gallery-wrap"><div class="gallery-heading"><span id="galleryCount">Immagini</span><span class="gallery-hint">Seleziona una miniatura per modificarla</span></div><div class="thumbnail-strip" id="thumbnailStrip" aria-label="Seleziona immagine"></div></div>
   </section>
 
-  <p class="foot">Trascina l'area di ritaglio per spostarla e usa gli angoli per ridimensionarla. L'immagine viene elaborata direttamente nel browser: non viene caricata online.</p>
+  <p class="foot">Seleziona una miniatura in basso per modificare ogni foto. Puoi scaricare una foto o ritagliarle tutte. Le immagini vengono elaborate direttamente nel browser.</p>
 </main>
 <footer class="site-footer"><a href="https://pepcoiro.github.io/website/" target="_blank" rel="noopener noreferrer" data-current-year>@ 2026 Giuseppe Coiro</a></footer>
 <script src="script.js" defer></script>
