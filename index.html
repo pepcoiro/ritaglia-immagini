@@ -21,8 +21,22 @@
   <section class="editor hidden" id="editor" aria-label="Editor immagine">
     <section class="controls" aria-label="Impostazioni ritaglio">
       <div class="field">
-        <label>Proporzioni</label>
-        <div class="ratio-buttons" id="ratioButtons" role="group" aria-label="Scegli le proporzioni">
+        <label>Proporzione per tutte le immagini</label>
+        <div class="ratio-buttons" id="ratioAllButtons" role="group" aria-label="Imposta le proporzioni per tutte le immagini">
+          <button class="ratio-btn active" type="button" data-ratio-all="free" aria-pressed="true">Libere</button>
+          <button class="ratio-btn" type="button" data-ratio-all="1:1" aria-pressed="false">1:1</button>
+          <button class="ratio-btn" type="button" data-ratio-all="4:3" aria-pressed="false">4:3</button>
+          <button class="ratio-btn" type="button" data-ratio-all="3:2" aria-pressed="false">3:2</button>
+          <button class="ratio-btn" type="button" data-ratio-all="16:9" aria-pressed="false">16:9</button>
+          <button class="ratio-btn" type="button" data-ratio-all="3:4" aria-pressed="false">3:4</button>
+          <button class="ratio-btn" type="button" data-ratio-all="2:3" aria-pressed="false">2:3</button>
+          <button class="ratio-btn" type="button" data-ratio-all="9:16" aria-pressed="false">9:16</button>
+          <button class="ratio-btn" type="button" data-ratio-all="custom" aria-pressed="false">Personalizzata</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Proporzione della foto selezionata</label>
+        <div class="ratio-buttons" id="ratioButtons" role="group" aria-label="Scegli le proporzioni della foto selezionata">
           <button class="ratio-btn active" type="button" data-ratio="free" aria-pressed="true">Libere</button>
           <button class="ratio-btn" type="button" data-ratio="1:1" aria-pressed="false">1:1</button>
           <button class="ratio-btn" type="button" data-ratio="4:3" aria-pressed="false">4:3</button>
@@ -58,7 +72,7 @@
 
     <div class="actions">
       <button class="btn" id="download" type="button">Ritaglia e scarica</button>
-      <button class="btn" id="downloadAll" type="button">Ritaglia tutte</button>
+      <button class="btn" id="downloadAll" type="button">Ritaglia e scarica tutte</button>
       <button class="btn alt" id="reset" type="button">Reimposta</button>
       <button class="btn alt" id="chooseAnother" type="button">Aggiungi immagini</button>
     </div>
