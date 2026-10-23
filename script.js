@@ -26,6 +26,7 @@
   $('reset').addEventListener('click',()=>{resetCrop();saveActiveCrop();});
   $('download').addEventListener('click',()=>exportItem(currentItem()));
   $('downloadAll').addEventListener('click',exportAll);
+  $('clearAll').addEventListener('click',clearAllPhotos);
   window.addEventListener('resize',()=>{if(naturalW){saveActiveCrop();layoutCrop(true);}});
   function setInfo(t){$('cropInfo').textContent=t;}
   function currentItem(){return items.find(i=>i.id===activeId);}
@@ -45,7 +46,24 @@
   function updateGallery(){
     $('galleryCount').textContent=items.length+(items.length===1?' immagine':' immagini');
     $('downloadAll').disabled=items.length<2;
+    $('clearAll').disabled=items.length===0;
     strip.querySelectorAll('.thumbnail').forEach(b=>{const active=Number(b.dataset.id)===activeId;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
+  }
+  function clearAllPhotos(){
+    if(!items.length)return;
+    if(!window.confirm('Vuoi davvero rimuovere tutte le foto caricate?'))return;
+    if(!window.confirm('Seconda conferma: tutte le foto e i ritagli impostati verranno rimossi. Continuare?'))return;
+    items.forEach(item=>URL.revokeObjectURL(item.url));
+    items=[];activeId=null;nextId=1;imageUrl=null;naturalW=0;naturalH=0;
+    image.onload=null;image.onerror=null;image.removeAttribute('src');
+    crop={x:0,y:0,w:0,h:0};bounds={x:0,y:0,w:0,h:0};drag=null;
+    cropBox.style.left='0px';cropBox.style.top='0px';cropBox.style.width='0px';cropBox.style.height='0px';
+    strip.replaceChildren();
+    editor.classList.add('hidden');drop.classList.remove('hidden');
+    ratioSelect.value=allRatio;updateRatioButtons();updateAllRatioButtons();
+    customRatio.classList.toggle('hidden',allRatio!=='custom');
+    updateGallery();setInfo('Seleziona le immagini da ritagliare.');
+    $('droptext').textContent='Trascina qui più immagini oppure';
   }
   function selectItem(id){
     saveActiveCrop();activeId=id;const item=currentItem();if(!item)return;
