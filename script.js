@@ -107,8 +107,8 @@
       ' × ' + Math.max(1, Math.round(crop.h * naturalH / bounds.h)) + ' px');
   }
   function clampCrop() {
-    crop.w = Math.max(16, Math.min(crop.w, bounds.x + bounds.w - crop.x));
-    crop.h = Math.max(16, Math.min(crop.h, bounds.y + bounds.h - crop.y));
+    // Durante lo spostamento mantieni le dimensioni e limita la selezione
+    // interamente ai bordi effettivi dell'immagine.
     crop.x = Math.max(bounds.x, Math.min(crop.x, bounds.x + bounds.w - crop.w));
     crop.y = Math.max(bounds.y, Math.min(crop.y, bounds.y + bounds.h - crop.h));
   }
