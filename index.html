@@ -19,26 +19,25 @@
   </section>
 
   <section class="editor hidden" id="editor" aria-label="Editor immagine">
-    <div class="image-stage" id="stage">
-      <img id="sourceImage" alt="Immagine da ritagliare" draggable="false">
-      <div class="crop-box" id="cropBox" role="img" aria-label="Area di ritaglio regolabile">
-        <span class="handle nw"></span><span class="handle ne"></span>
-        <span class="handle sw"></span><span class="handle se"></span>
-      </div>
-    </div>
-
     <section class="controls" aria-label="Impostazioni ritaglio">
       <div class="field">
-        <label for="ratio">Proporzioni</label>
-        <select id="ratio">
-          <option value="free">Libere</option>
-          <option value="1:1">Quadrato · 1:1</option>
-          <option value="4:3">Orizzontale · 4:3</option>
-          <option value="3:2">Foto · 3:2</option>
-          <option value="16:9">Schermo · 16:9</option>
-          <option value="3:4">Verticale · 3:4</option>
-          <option value="2:3">Ritratto · 2:3</option>
-          <option value="9:16">Storia · 9:16</option>
+        <label>Proporzioni</label>
+        <div class="ratio-buttons" id="ratioButtons" role="group" aria-label="Scegli le proporzioni">
+          <button class="ratio-btn active" type="button" data-ratio="free" aria-pressed="true">Libere</button>
+          <button class="ratio-btn" type="button" data-ratio="1:1" aria-pressed="false">1:1</button>
+          <button class="ratio-btn" type="button" data-ratio="4:3" aria-pressed="false">4:3</button>
+          <button class="ratio-btn" type="button" data-ratio="3:2" aria-pressed="false">3:2</button>
+          <button class="ratio-btn" type="button" data-ratio="16:9" aria-pressed="false">16:9</button>
+          <button class="ratio-btn" type="button" data-ratio="3:4" aria-pressed="false">3:4</button>
+          <button class="ratio-btn" type="button" data-ratio="2:3" aria-pressed="false">2:3</button>
+          <button class="ratio-btn" type="button" data-ratio="9:16" aria-pressed="false">9:16</button>
+          <button class="ratio-btn" type="button" data-ratio="custom" aria-pressed="false">Personalizzata</button>
+        </div>
+        <select id="ratio" class="ratio-state" aria-hidden="true" tabindex="-1">
+          <option value="free">Libere</option><option value="1:1">Quadrato · 1:1</option>
+          <option value="4:3">Orizzontale · 4:3</option><option value="3:2">Foto · 3:2</option>
+          <option value="16:9">Schermo · 16:9</option><option value="3:4">Verticale · 3:4</option>
+          <option value="2:3">Ritratto · 2:3</option><option value="9:16">Storia · 9:16</option>
           <option value="custom">Personalizzata</option>
         </select>
       </div>
@@ -48,6 +47,14 @@
       </div>
       <div class="crop-info" id="cropInfo" aria-live="polite">Seleziona l'area da ritagliare.</div>
     </section>
+
+    <div class="image-stage" id="stage">
+      <img id="sourceImage" alt="Immagine da ritagliare" draggable="false">
+      <div class="crop-box" id="cropBox" role="img" aria-label="Area di ritaglio regolabile">
+        <span class="handle nw"></span><span class="handle ne"></span>
+        <span class="handle sw"></span><span class="handle se"></span>
+      </div>
+    </div>
 
     <div class="actions">
       <button class="btn" id="download" type="button">Ritaglia e scarica</button>
