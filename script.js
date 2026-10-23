@@ -72,7 +72,7 @@
     const displayW = imgRect.width, displayH = imgRect.height;
     bounds = {x:offsetX, y:offsetY, w:displayW, h:displayH};
     const ratio = getRatio();
-    let w = displayW * .8, h = displayH * .8;
+    let w = displayW, h = displayH;
     if (ratio && Number.isFinite(ratio)) {
       if (w / h > ratio) w = h * ratio; else h = w / ratio;
     }
