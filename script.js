@@ -42,7 +42,6 @@
   }
   function selectItem(id){
     saveActiveCrop();activeId=id;const item=currentItem();if(!item)return;
-    if(imageUrl)URL.revokeObjectURL(imageUrl);
     imageUrl=item.url;
     image.onload=()=>{naturalW=image.naturalWidth;naturalH=image.naturalHeight;layoutCrop(Boolean(item.normalized));updateGallery();setInfo(item.file.name+' · '+naturalW+' × '+naturalH+' px');};
     image.onerror=()=>setInfo('Impossibile aprire questa immagine.');image.src=item.url;updateGallery();
