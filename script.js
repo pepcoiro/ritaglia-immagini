@@ -54,6 +54,7 @@
     const wasActive=activeId===id;
     const next=items[index+1]||items[index-1];
     URL.revokeObjectURL(items[index].url);
+    items[index].button?.remove();
     items.splice(index,1);
     if(!items.length){
       activeId=null;imageUrl=null;naturalW=0;naturalH=0;image.onload=null;image.onerror=null;image.removeAttribute('src');
