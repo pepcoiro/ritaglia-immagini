@@ -38,7 +38,7 @@ p{font-family:"Jost",sans-serif;font-size:18px;font-weight:400;line-height:1.8;m
 .site-footer{width:min(100%,900px);margin:24px auto 0;padding-top:12px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px;line-height:1.5}
 .site-footer a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .site-footer a:hover{opacity:.7}
-@media(max-width:600px){body{padding:24px 18px}header .page-title{font-size:27px}.tool{margin-top:30px}.drop{padding:23px 12px}#sourceImage{max-height:55vh}.actions .btn{flex:1}.custom-ratio{gap:14px}.ratio-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.ratio-btn{width:100%;padding:7px 4px;text-align:center}}
+@media(max-width:600px){body{padding:24px 18px}header .page-title{font-size:27px}.tool{margin-top:30px}.drop{padding:23px 12px}#sourceImage{max-height:55vh}.actions .btn{flex:1}.custom-ratio{gap:14px}.ratio-buttons{display:flex;flex-wrap:wrap;gap:7px}.ratio-btn{width:auto;padding:6px 11px;text-align:center}.editor > .actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.editor > .actions .btn{flex:initial;min-width:0;white-space:normal;padding:7px 6px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 
 /* Proporzioni: pulsanti orizzontali sopra l'anteprima */
