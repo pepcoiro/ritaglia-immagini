@@ -2,7 +2,7 @@
   const $ = id => document.getElementById(id);
   const drop = $('drop'), picker = $('picker'), editor = $('editor');
   const image = $('sourceImage'), stage = $('stage'), cropBox = $('cropBox');
-  const ratioSelect = $('ratio'), customRatio = $('customRatio');
+  const ratioSelect = $('ratio'), customRatio = $('customRatio'), ratioButtons = $('ratioButtons');
   const ratioWidth = $('ratioWidth'), ratioHeight = $('ratioHeight');
   let sourceFile = null, imageUrl = null, naturalW = 0, naturalH = 0;
   let crop = {x:0,y:0,w:0,h:0}, bounds = {x:0,y:0,w:0,h:0};
@@ -23,10 +23,25 @@
     if (file) loadFile(file);
     else if (e.dataTransfer.files.length) setInfo('Formato non supportato. Usa JPEG, PNG, WebP, GIF o BMP.');
   });
+  ratioButtons.addEventListener('click', e => {
+    const button = e.target.closest('[data-ratio]');
+    if (!button) return;
+    ratioSelect.value = button.dataset.ratio;
+    ratioSelect.dispatchEvent(new Event('change'));
+    updateRatioButtons();
+  });
   ratioSelect.addEventListener('change', () => {
     customRatio.classList.toggle('hidden', ratioSelect.value !== 'custom');
+    updateRatioButtons();
     if (naturalW) resetCrop();
   });
+  function updateRatioButtons() {
+    ratioButtons.querySelectorAll('[data-ratio]').forEach(button => {
+      const active = button.dataset.ratio === ratioSelect.value;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+  }
   ratioWidth.addEventListener('input', () => { if (ratioSelect.value === 'custom' && naturalW) resetCrop(); });
   ratioHeight.addEventListener('input', () => { if (ratioSelect.value === 'custom' && naturalW) resetCrop(); });
   $('reset').addEventListener('click', resetCrop);
