@@ -51,7 +51,10 @@ p{font-family:"Jost",sans-serif;font-size:18px;font-weight:400;line-height:1.8;m
 
 .gallery-wrap{margin:24px 0 8px}.gallery-heading{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-bottom:10px;font-size:15px}.gallery-hint{font-size:12px;color:var(--muted);text-align:right}
 .thumbnail-strip{display:flex;gap:10px;overflow-x:auto;padding:3px 2px 12px;scroll-snap-type:x mandatory}
-.thumbnail{flex:0 0 92px;width:92px;padding:5px;border:1px solid var(--line);background:transparent;color:var(--fg);font:400 12px "Jost",sans-serif;text-align:left;cursor:pointer;scroll-snap-align:start;opacity:.75}
-.thumbnail:hover{opacity:1;border-color:var(--fg)}.thumbnail.selected{border:2px solid var(--fg);padding:4px;opacity:1}
-.thumbnail img{display:block;width:100%;height:65px;object-fit:contain;background:#242424;margin-bottom:5px}.thumbnail span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media(max-width:600px){.gallery-heading{align-items:flex-start;flex-direction:column;gap:0}.gallery-hint{text-align:left}.thumbnail{flex-basis:80px;width:80px}.thumbnail img{height:56px}}
+.thumbnail{position:relative;flex:0 0 92px;width:92px;padding:4px;border:1px solid var(--line);background:transparent;scroll-snap-align:start;opacity:.8}
+.thumbnail:hover{opacity:1;border-color:var(--fg)}.thumbnail.selected{border:2px solid var(--fg);padding:3px;opacity:1}
+.thumbnail-select{display:block;width:100%;padding:0;border:0;background:transparent;color:var(--fg);font:400 12px "Jost",sans-serif;text-align:left;cursor:pointer}
+.thumbnail-select img{display:block;width:100%;height:65px;object-fit:contain;background:#242424;margin-bottom:5px}.thumbnail-select span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.thumbnail-remove{position:absolute;top:3px;right:3px;width:22px;height:22px;padding:0;border:1px solid var(--line);background:var(--bg);color:var(--fg);font:600 18px/18px "Jost",sans-serif;cursor:pointer;opacity:.95}
+.thumbnail-remove:hover{background:var(--fg);color:var(--bg)}
+@media(max-width:600px){.gallery-heading{align-items:flex-start;flex-direction:column;gap:0}.gallery-hint{text-align:left}.thumbnail{flex-basis:80px;width:80px}.thumbnail-select img{height:56px}}
