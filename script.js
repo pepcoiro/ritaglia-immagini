@@ -1,7 +1,8 @@
 (() => {
   const $ = id => document.getElementById(id);
   const drop=$('drop'), picker=$('picker'), editor=$('editor'), image=$('sourceImage'), stage=$('stage'), cropBox=$('cropBox');
-  const ratioSelect=$('ratio'), customRatio=$('customRatio'), ratioButtons=$('ratioButtons'), ratioWidth=$('ratioWidth'), ratioHeight=$('ratioHeight'), strip=$('thumbnailStrip');
+  const ratioSelect=$('ratio'), customRatio=$('customRatio'), ratioButtons=$('ratioButtons'), ratioAllButtons=$('ratioAllButtons'), ratioWidth=$('ratioWidth'), ratioHeight=$('ratioHeight'), strip=$('thumbnailStrip');
+  let allRatio='free';
   let items=[],activeId=null,nextId=1,imageUrl=null,naturalW=0,naturalH=0;
   let crop={x:0,y:0,w:0,h:0},bounds={x:0,y:0,w:0,h:0},drag=null;
   const accepted=/^image\/(jpeg|png|webp|gif|bmp)$/;
@@ -12,8 +13,10 @@
   drop.addEventListener('dragleave',()=>drop.classList.remove('drag'));
   drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag');addFiles([...e.dataTransfer.files]);});
   ratioButtons.addEventListener('click',e=>{const b=e.target.closest('[data-ratio]');if(!b)return;saveActiveCrop();ratioSelect.value=b.dataset.ratio;ratioSelect.dispatchEvent(new Event('change'));updateRatioButtons();});
-  ratioSelect.addEventListener('change',()=>{customRatio.classList.toggle('hidden',ratioSelect.value!=='custom');updateRatioButtons();if(naturalW){resetCrop();saveActiveCrop();}});
+  ratioSelect.addEventListener('change',()=>{const item=currentItem();if(item)item.ratio=ratioSelect.value;customRatio.classList.toggle('hidden',ratioSelect.value!=='custom'&&allRatio!=='custom');updateRatioButtons();if(naturalW){resetCrop();saveActiveCrop();}});
+  ratioAllButtons.addEventListener('click',e=>{const b=e.target.closest('[data-ratio-all]');if(!b)return;saveActiveCrop();allRatio=b.dataset.ratioAll;items.forEach(item=>{item.ratio=allRatio;item.normalized=null;});ratioSelect.value=allRatio;customRatio.classList.toggle('hidden',allRatio!=='custom');updateRatioButtons();updateAllRatioButtons();if(naturalW){resetCrop();saveActiveCrop();}});
   function updateRatioButtons(){ratioButtons.querySelectorAll('[data-ratio]').forEach(b=>{const active=b.dataset.ratio===ratioSelect.value;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});}
+  function updateAllRatioButtons(){ratioAllButtons.querySelectorAll('[data-ratio-all]').forEach(b=>{const active=b.dataset.ratioAll===allRatio;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});}
   ratioWidth.addEventListener('input',()=>{if(ratioSelect.value==='custom'&&naturalW){resetCrop();saveActiveCrop();}});
   ratioHeight.addEventListener('input',()=>{if(ratioSelect.value==='custom'&&naturalW){resetCrop();saveActiveCrop();}});
   $('reset').addEventListener('click',()=>{resetCrop();saveActiveCrop();});
@@ -22,11 +25,11 @@
   window.addEventListener('resize',()=>{if(naturalW){saveActiveCrop();layoutCrop(true);}});
   function setInfo(t){$('cropInfo').textContent=t;}
   function currentItem(){return items.find(i=>i.id===activeId);}
-  function getRatio(){const v=ratioSelect.value;if(v==='free')return null;if(v==='custom'){const w=Number(ratioWidth.value),h=Number(ratioHeight.value);return Number.isFinite(w)&&Number.isFinite(h)&&w>0&&h>0?w/h:NaN;}const p=v.split(':').map(Number);return p[0]/p[1];}
+  function getRatio(){const item=currentItem();const v=item?.ratio||ratioSelect.value;if(v==='free')return null;if(v==='custom'){const w=Number(ratioWidth.value),h=Number(ratioHeight.value);return Number.isFinite(w)&&Number.isFinite(h)&&w>0&&h>0?w/h:NaN;}const p=v.split(':').map(Number);return p[0]/p[1];}
   function addFiles(files){
     const valid=files.filter(f=>accepted.test(f.type));
     if(!valid.length){setInfo('Scegli immagini JPEG, PNG, WebP, GIF o BMP.');return;}
-    valid.forEach(file=>{const item={id:nextId++,file,url:URL.createObjectURL(file),normalized:null};items.push(item);makeThumbnail(item);});
+    valid.forEach(file=>{const item={id:nextId++,file,url:URL.createObjectURL(file),normalized:null,ratio:allRatio};items.push(item);makeThumbnail(item);});
     updateGallery();drop.classList.add('hidden');editor.classList.remove('hidden');
     if(!activeId)selectItem(items[0].id);else setInfo(items.length+' immagini caricate.');
   }
@@ -43,7 +46,7 @@
   function selectItem(id){
     saveActiveCrop();activeId=id;const item=currentItem();if(!item)return;
     imageUrl=item.url;
-    image.onload=()=>{naturalW=image.naturalWidth;naturalH=image.naturalHeight;layoutCrop(Boolean(item.normalized));updateGallery();setInfo(item.file.name+' · '+naturalW+' × '+naturalH+' px');};
+    image.onload=()=>{naturalW=image.naturalWidth;naturalH=image.naturalHeight;ratioSelect.value=item.ratio||allRatio;customRatio.classList.toggle('hidden',ratioSelect.value!=='custom'&&allRatio!=='custom');updateRatioButtons();updateAllRatioButtons();layoutCrop(Boolean(item.normalized));updateGallery();setInfo(item.file.name+' · '+naturalW+' × '+naturalH+' px');};
     image.onerror=()=>setInfo('Impossibile aprire questa immagine.');image.src=item.url;updateGallery();
     item.button.scrollIntoView({block:'nearest',inline:'nearest',behavior:'smooth'});
   }
@@ -83,5 +86,5 @@
   }
   async function downloadResult(item,n){const result=await cropBlob(item,n);if(!result)return false;const ext=result.type==='image/jpeg'?'jpg':result.type==='image/webp'?'webp':'png',base=item.file.name.replace(/\.[^.]+$/,'');const a=document.createElement('a'),url=URL.createObjectURL(result.blob);a.href=url;a.download=base+'-ritagliata.'+ext;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);return true;}
   async function exportItem(item){saveActiveCrop();if(!item)return;setInfo('Preparazione del ritaglio…');const ok=await downloadResult(item,item.normalized||{x:0,y:0,w:1,h:1});setInfo(ok?'Immagine ritagliata e scaricata.':'Esportazione non riuscita.');}
-  async function exportAll(){saveActiveCrop();const b=$('downloadAll');b.disabled=true;b.textContent='Preparazione…';let done=0;for(const item of items){if(await downloadResult(item,item.normalized||{x:0,y:0,w:1,h:1}))done++;setInfo('Ritaglio immagini: '+done+' di '+items.length+'…');await new Promise(r=>setTimeout(r,250));}b.textContent='Ritaglia tutte';b.disabled=items.length<2;setInfo('Completato: '+done+' immagini scaricate. Se richiesto, consenti i download multipli nel browser.');}
+  async function exportAll(){saveActiveCrop();const b=$('downloadAll');b.disabled=true;b.textContent='Preparazione…';let done=0;for(const item of items){if(await downloadResult(item,item.normalized||{x:0,y:0,w:1,h:1}))done++;setInfo('Ritaglio immagini: '+done+' di '+items.length+'…');await new Promise(r=>setTimeout(r,250));}b.textContent='Ritaglia e scarica tutte';b.disabled=items.length<2;setInfo('Completato: '+done+' immagini scaricate. Se richiesto, consenti i download multipli nel browser.');}
 })();
