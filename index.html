@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Ritaglia immagini online con proporzioni predefinite o personalizzate. Gratis, direttamente nel browser.">
+<title>Ritaglia immagini</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header><a href="#">Ritaglia immagini</a></header>
+  <section class="tool">
+    <div class="drop" id="drop">
+      <p id="droptext">Trascina qui un'immagine oppure</p>
+      <div class="actions centered"><button class="btn alt" id="chooseFile" type="button">Scegli immagine</button></div>
+      <input id="picker" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp" hidden>
+    </div>
+  </section>
+
+  <section class="editor hidden" id="editor" aria-label="Editor immagine">
+    <div class="image-stage" id="stage">
+      <img id="sourceImage" alt="Immagine da ritagliare" draggable="false">
+      <div class="crop-box" id="cropBox" role="img" aria-label="Area di ritaglio regolabile">
+        <span class="handle nw"></span><span class="handle ne"></span>
+        <span class="handle sw"></span><span class="handle se"></span>
+      </div>
+    </div>
+
+    <section class="controls" aria-label="Impostazioni ritaglio">
+      <div class="field">
+        <label for="ratio">Proporzioni</label>
+        <select id="ratio">
+          <option value="free">Libere</option>
+          <option value="1:1">Quadrato · 1:1</option>
+          <option value="4:3">Orizzontale · 4:3</option>
+          <option value="3:2">Foto · 3:2</option>
+          <option value="16:9">Schermo · 16:9</option>
+          <option value="3:4">Verticale · 3:4</option>
+          <option value="2:3">Ritratto · 2:3</option>
+          <option value="9:16">Storia · 9:16</option>
+          <option value="custom">Personalizzata</option>
+        </select>
+      </div>
+      <div class="custom-ratio hidden" id="customRatio">
+        <div class="field"><label for="ratioWidth">Larghezza rapporto</label><input id="ratioWidth" type="number" min="1" max="10000" value="5" inputmode="numeric"></div>
+        <div class="field"><label for="ratioHeight">Altezza rapporto</label><input id="ratioHeight" type="number" min="1" max="10000" value="4" inputmode="numeric"></div>
+      </div>
+      <div class="crop-info" id="cropInfo" aria-live="polite">Seleziona l'area da ritagliare.</div>
+    </section>
+
+    <div class="actions">
+      <button class="btn" id="download" type="button">Ritaglia e scarica</button>
+      <button class="btn alt" id="reset" type="button">Reimposta</button>
+      <button class="btn alt" id="chooseAnother" type="button">Cambia immagine</button>
+    </div>
+  </section>
+
+  <p class="foot">Trascina l'area di ritaglio per spostarla e usa gli angoli per ridimensionarla. L'immagine viene elaborata direttamente nel browser: non viene caricata online.</p>
+</main>
+<footer class="site-footer"><a href="https://pepcoiro.github.io/website/" target="_blank" rel="noopener noreferrer" data-current-year>@ 2026 Giuseppe Coiro</a></footer>
+<script src="script.js" defer></script>
+<script>document.querySelectorAll("[data-current-year]").forEach(function(link){link.textContent="@ "+new Date().getFullYear()+" Giuseppe Coiro";});</script>
+</body>
+</html>
