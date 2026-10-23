@@ -3,8 +3,8 @@ html{scrollbar-gutter:stable}
 :root{color-scheme:dark;--bg:#161616;--fg:#e5e5e2;--muted:#a0a09d;--line:rgba(229,229,226,.28);--hover:rgba(229,229,226,.07)}
 *{box-sizing:border-box}
 body{font-family:"Jost",sans-serif;font-size:18px;font-weight:400;line-height:1.8;margin:0;padding:36px 24px;background:var(--bg);color:var(--fg)}
-main{width:min(100%,600px);margin:0 auto;padding:0 0 30px}
-header{max-width:600px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+main{width:min(100%,900px);margin:0 auto;padding:0 0 30px}
+header{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
 header .page-title{color:var(--fg);font-family:"Jost",sans-serif;font-size:30px;font-weight:600;letter-spacing:-.03em}
 h1,h2,h3{font-family:"Jost",sans-serif;font-weight:600}
 p{font-family:"Jost",sans-serif;font-size:18px;font-weight:400;line-height:1.8;margin:0 0 16px}
@@ -35,7 +35,7 @@ p{font-family:"Jost",sans-serif;font-size:18px;font-weight:400;line-height:1.8;m
 .crop-info{font-size:14px;color:var(--muted)}
 .hidden{display:none!important}
 .foot{font-size:14px;font-weight:300;color:var(--muted);margin-top:30px}
-.site-footer{width:min(100%,600px);margin:24px auto 0;padding-top:12px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px;line-height:1.5}
+.site-footer{width:min(100%,900px);margin:24px auto 0;padding-top:12px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px;line-height:1.5}
 .site-footer a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .site-footer a:hover{opacity:.7}
 @media(max-width:600px){body{padding:24px 18px}header .page-title{font-size:27px}.tool{margin-top:30px}.drop{padding:23px 12px}#sourceImage{max-height:55vh}.actions .btn{flex:1}.custom-ratio{gap:14px}}
