@@ -1,11 +1,13 @@
 (() => {
   const $ = id => document.getElementById(id);
-  const drop=$('drop'), picker=$('picker'), editor=$('editor'), image=$('sourceImage'), stage=$('stage'), cropBox=$('cropBox');
+  const drop=$('drop'), picker=$('picker'), folderPicker=$('folderPicker'), editor=$('editor'), image=$('sourceImage'), stage=$('stage'), cropBox=$('cropBox');
   const ratioSelect=$('ratio'), customRatio=$('customRatio'), ratioButtons=$('ratioButtons'), ratioAllButtons=$('ratioAllButtons'), ratioWidth=$('ratioWidth'), ratioHeight=$('ratioHeight'), strip=$('thumbnailStrip');
   let allRatio='free';
   let items=[],activeId=null,nextId=1,imageUrl=null,naturalW=0,naturalH=0;
   let crop={x:0,y:0,w:0,h:0},bounds={x:0,y:0,w:0,h:0},drag=null;
   const accepted=/^image\/(jpeg|png|webp|gif|bmp)$/;
+  $('chooseFolder').addEventListener('click',()=>folderPicker.click());
+  folderPicker.addEventListener('change',e=>{addFiles([...e.target.files]);folderPicker.value='';});
   $('chooseFile').addEventListener('click',()=>picker.click());
   $('chooseAnother').addEventListener('click',()=>picker.click());
   picker.addEventListener('change',e=>{addFiles([...e.target.files]);picker.value='';});
@@ -52,8 +54,7 @@
   }
   function clearAllPhotos(){
     if(!items.length)return;
-    if(!window.confirm('Vuoi davvero rimuovere tutte le foto caricate?'))return;
-    if(!window.confirm('Seconda conferma: tutte le foto e i ritagli impostati verranno rimossi. Continuare?'))return;
+    if(!window.confirm('Vuoi davvero azzerare tutto? Verranno rimosse tutte le foto caricate e i ritagli impostati.'))return;
     items.forEach(item=>URL.revokeObjectURL(item.url));
     items=[];activeId=null;nextId=1;imageUrl=null;naturalW=0;naturalH=0;
     image.onload=null;image.onerror=null;image.removeAttribute('src');
