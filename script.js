@@ -17,8 +17,12 @@
   ratioAllButtons.addEventListener('click',e=>{const b=e.target.closest('[data-ratio-all]');if(!b)return;saveActiveCrop();allRatio=b.dataset.ratioAll;items.forEach(item=>{item.ratio=allRatio;item.normalized=null;});ratioSelect.value=allRatio;customRatio.classList.toggle('hidden',allRatio!=='custom');updateRatioButtons();updateAllRatioButtons();if(naturalW){resetCrop();saveActiveCrop();}});
   function updateRatioButtons(){ratioButtons.querySelectorAll('[data-ratio]').forEach(b=>{const active=b.dataset.ratio===ratioSelect.value;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});}
   function updateAllRatioButtons(){ratioAllButtons.querySelectorAll('[data-ratio-all]').forEach(b=>{const active=b.dataset.ratioAll===allRatio;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});}
-  ratioWidth.addEventListener('input',()=>{if(ratioSelect.value==='custom'&&naturalW){resetCrop();saveActiveCrop();}});
-  ratioHeight.addEventListener('input',()=>{if(ratioSelect.value==='custom'&&naturalW){resetCrop();saveActiveCrop();}});
+  function customRatioChanged(){
+    if(allRatio==='custom')items.forEach(item=>{if(item.ratio==='custom')item.normalized=null;});
+    if(currentItem()?.ratio==='custom'&&naturalW){resetCrop();saveActiveCrop();}
+  }
+  ratioWidth.addEventListener('input',customRatioChanged);
+  ratioHeight.addEventListener('input',customRatioChanged);
   $('reset').addEventListener('click',()=>{resetCrop();saveActiveCrop();});
   $('download').addEventListener('click',()=>exportItem(currentItem()));
   $('downloadAll').addEventListener('click',exportAll);
