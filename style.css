@@ -58,3 +58,6 @@ p{font-family:"Jost",sans-serif;font-size:18px;font-weight:400;line-height:1.8;m
 .thumbnail-remove{position:absolute;top:3px;right:3px;width:22px;height:22px;padding:0;border:1px solid var(--line);background:var(--bg);color:var(--fg);font:600 18px/18px "Jost",sans-serif;cursor:pointer;opacity:.95}
 .thumbnail-remove:hover{background:var(--fg);color:var(--bg)}
 @media(max-width:600px){.gallery-heading{align-items:flex-start;flex-direction:column;gap:0}.gallery-hint{text-align:left}.thumbnail{flex-basis:80px;width:80px}.thumbnail-select img{height:56px}}
+
+/* Allinea esplicitamente i gruppi dei pulsanti delle proporzioni a sinistra */
+#ratioButtons,#ratioAllButtons{justify-content:flex-start!important;margin-left:0!important;padding-left:0!important}
