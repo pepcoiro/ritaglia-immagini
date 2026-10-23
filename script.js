@@ -42,15 +42,39 @@
     if(!activeId)selectItem(items[0].id);else setInfo(items.length+' immagini caricate.');
   }
   function makeThumbnail(item){
-    const b=document.createElement('button');b.type='button';b.className='thumbnail';b.dataset.id=item.id;b.title=item.file.name;
+    const card=document.createElement('div');card.className='thumbnail';card.dataset.id=item.id;
+    const b=document.createElement('button');b.type='button';b.className='thumbnail-select';b.title=item.file.name;
     const img=document.createElement('img');img.src=item.url;img.alt='';
-    const name=document.createElement('span');name.textContent=item.file.name;b.append(img,name);b.addEventListener('click',()=>selectItem(item.id));item.button=b;strip.appendChild(b);
+    const name=document.createElement('span');name.textContent=item.file.name;b.append(img,name);b.addEventListener('click',()=>selectItem(item.id));
+    const remove=document.createElement('button');remove.type='button';remove.className='thumbnail-remove';remove.textContent='×';remove.title='Rimuovi '+item.file.name;remove.setAttribute('aria-label','Rimuovi '+item.file.name);remove.addEventListener('click',e=>{e.stopPropagation();removeItem(item.id)});
+    card.append(b,remove);item.button=card;strip.appendChild(card);
+  }
+  function removeItem(id){
+    const index=items.findIndex(item=>item.id===id);if(index<0)return;
+    const wasActive=activeId===id;
+    const next=items[index+1]||items[index-1];
+    URL.revokeObjectURL(items[index].url);
+    items.splice(index,1);
+    if(!items.length){
+      activeId=null;imageUrl=null;naturalW=0;naturalH=0;image.onload=null;image.onerror=null;image.removeAttribute('src');
+      crop={x:0,y:0,w:0,h:0};bounds={x:0,y:0,w:0,h:0};drag=null;
+      cropBox.style.left='0px';cropBox.style.top='0px';cropBox.style.width='0px';cropBox.style.height='0px';
+      editor.classList.add('hidden');drop.classList.remove('hidden');
+      ratioAllButtons.closest('.field').classList.add('hidden');
+      $('droptext').textContent='Trascina qui più immagini oppure';
+      setInfo('Seleziona le immagini da ritagliare.');
+    }else{
+      if(wasActive){activeId=null;selectItem(next.id)}
+      else if(activeId===null)selectItem(items[0].id);
+      ratioAllButtons.closest('.field').classList.toggle('hidden',items.length<2);
+    }
+    updateGallery();
   }
   function updateGallery(){
     $('galleryCount').textContent=items.length+(items.length===1?' immagine':' immagini');
     $('downloadAll').disabled=items.length<2;
     $('clearAll').disabled=items.length===0;
-    strip.querySelectorAll('.thumbnail').forEach(b=>{const active=Number(b.dataset.id)===activeId;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
+    strip.querySelectorAll('.thumbnail').forEach(card=>{const active=Number(card.dataset.id)===activeId;card.classList.toggle('selected',active);const b=card.querySelector('.thumbnail-select');if(b)b.setAttribute('aria-pressed',String(active));});
   }
   function clearAllPhotos(){
     if(!items.length)return;
